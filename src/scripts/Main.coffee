@@ -4,7 +4,7 @@ console.log "hi"
 window.onload = ()->
 
     preload = ()->
-        game.load.image('phaser', 'phaser.png');
+        game.load.image('phaser', 'assets/img/phaser.png');
 
     create = ()->
         game.add.sprite(0, 0, 'phaser');
