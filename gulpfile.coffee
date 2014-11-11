@@ -6,6 +6,7 @@ srcmap = require 'gulp-sourcemaps'
 less = require 'gulp-less'
 rename = require 'gulp-rename'
 browserify = require 'gulp-browserify'
+serve = require 'gulp-serve'
 
 paths =
     scripts: ['src/scripts/**/*.coffee']
@@ -21,13 +22,13 @@ gulp.task 'scripts', ()->
             debug: true
         )
         .pipe(rename('Main.js'))
-        .pipe(gulp.dest('js'))
+        .pipe(gulp.dest('build/js'))
 
 
 gulp.task 'styles', ()->
     gulp.src(paths.styles)
         .pipe(less())
-        .pipe(gulp.dest('css'))
+        .pipe(gulp.dest('build/css'))
 
 
 gulp.task 'watch', ()->
@@ -36,5 +37,7 @@ gulp.task 'watch', ()->
 
 
 
-gulp.task 'default', ()->
-    console.log "hallo"
+gulp.task 'serve', serve(
+    root: ['build']
+    port: 8000
+)
