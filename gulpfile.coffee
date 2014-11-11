@@ -8,26 +8,26 @@ rename = require 'gulp-rename'
 browserify = require 'gulp-browserify'
 
 paths =
-    scripts: ['scripts/**/*.coffee']
-    styles: ['styles/all.less']
-    watchStyles: ['styles/**/*.less']
+    scripts: ['src/scripts/**/*.coffee']
+    styles: ['src/styles/all.less']
+    watchStyles: ['src/styles/**/*.less']
 
 
 gulp.task 'scripts', ()->
-    gulp.src("scripts/Main.coffee", {read: false})
+    gulp.src("src/scripts/Main.coffee", {read: false})
         .pipe(browserify
             transform: ['coffeeify'],
             extensions: ['.coffee']
             debug: true
         )
         .pipe(rename('Main.js'))
-        .pipe(gulp.dest('public/js'))
+        .pipe(gulp.dest('js'))
 
 
 gulp.task 'styles', ()->
     gulp.src(paths.styles)
         .pipe(less())
-        .pipe(gulp.dest('public/css'))
+        .pipe(gulp.dest('css'))
 
 
 gulp.task 'watch', ()->
