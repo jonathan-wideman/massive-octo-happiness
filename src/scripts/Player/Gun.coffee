@@ -3,7 +3,8 @@
 class exports.Gun extends Phaser.Sprite
     number_of_bullets: 12
     last_bullet_time: 0
-    BULLET_SPEED: 20
+    BULLET_SPEED: 500
+    FIRE_DELAY: 100
 
     constructor: (@player, @game)->
         super @game, 0, 0, 'player_bullet', 1
@@ -26,6 +27,9 @@ class exports.Gun extends Phaser.Sprite
 
 
     shoot: ()=>
+        return if @game.time.now - @last_bullet_time < @FIRE_DELAY
+        @last_bullet_time = @game.time.now
+
         bullet = @pool.getFirstDead()
 
         if not bullet?
