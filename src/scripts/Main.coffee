@@ -10,16 +10,23 @@ window.onload = ()->
 
 gamestate =
     preload: ()->
-        @level = new Level game
-
         game.load.image 'player', 'assets/img/obj/player.png'
         game.load.image 'player_bullet', 'assets/img/obj/bullet.png'
 
+        game.load.image('map_tiles', 'assets/img/ui/mapTiles.png');
+
+
     update: ()->
         if game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR, 10)
-            @level.nextRoom()
+            @level.toggleMap()
+            # @level.nextRoom()
+
 
     create: ()->
+        game.stage.backgroundColor = '#2d2d2d';
+
+        @level = new Level game
+
         @level.showRoom(0)
 
         game.physics.startSystem Phaser.Physics.ARCADE
@@ -31,4 +38,5 @@ gamestate =
         game.physics.enable player, Phaser.Physics.ARCADE
 
         new Ui(game, player)
+
 
