@@ -1,6 +1,8 @@
 Controller = require("./Controller").Controller
 
 class exports.Player extends Phaser.Sprite
+    speed: 200
+
     constructor: (@game)->
         x = @game.world.centerX
         y = @game.world.centerY
@@ -11,3 +13,6 @@ class exports.Player extends Phaser.Sprite
 
         return @
 
+
+    update: ()=>
+        @controller.update()
