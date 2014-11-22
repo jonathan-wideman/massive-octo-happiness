@@ -17,8 +17,11 @@ class exports.Gun extends Phaser.Sprite
         super @game, 0, 0, 'player_bullet', 1
         @anchor.setTo 0.5, 0.5
 
-        @pool = @game.add.group()
+        @pool = @game.make.group()
         @_fillPool()
+
+        @player.group.add @
+        @player.group.add @pool
 
         this
 
@@ -42,9 +45,7 @@ class exports.Gun extends Phaser.Sprite
     #
     shoot: ()=>
         return if @game.time.now - @last_bullet_time < @fire_delay
-
-        if not @player.hasAmmunition()
-            return
+        return if not @player.hasAmmunition()
 
         @last_bullet_time = @game.time.now
 
@@ -59,6 +60,8 @@ class exports.Gun extends Phaser.Sprite
 
         bullet.body.velocity.x = Math.cos(bullet.rotation) * @speed
         bullet.body.velocity.y = Math.sin(bullet.rotation) * @speed
+
+        @player.firedGun()
 
 
     # Populates the initial bullet @pool.

@@ -25,8 +25,6 @@ gamestate =
         game.physics.startSystem Phaser.Physics.ARCADE
 
         window.player = new Player(game)
-        game.add.existing player
-        game.add.existing player.gun
 
         game.physics.enable player, Phaser.Physics.ARCADE
 

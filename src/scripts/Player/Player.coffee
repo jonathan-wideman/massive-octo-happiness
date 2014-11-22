@@ -25,6 +25,10 @@ class exports.Player extends Phaser.Sprite
 
         @anchor.setTo 0.5, 0.5
 
+        # Woooo... magic
+        @group = @game.add.group()
+        @group.add @
+
         @controller = new Controller @game, @
         @gun = new Gun @game, @
 
@@ -73,3 +77,7 @@ class exports.Player extends Phaser.Sprite
 
     hasAmmunition: ()->
         return @ammo > 0
+
+
+    firedGun: ()->
+        @ammo--

@@ -1,5 +1,7 @@
 Room = require("./Room").Room
 
+# Each level is made up of many rooms. To progress past a
+# level, you must traverse rooms and find the exit
 class exports.Level extends Phaser.Group
 
     constructor: (@game)->
