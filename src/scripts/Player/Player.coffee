@@ -56,6 +56,21 @@ class exports.Player extends Phaser.Sprite
         secret.applyEffect() for secret in @secrets
 
 
+    addPain: (amount)->
+        @pain += amount
+
+    reducePain: (amount)->
+        @pain -= amount
+        @pain = Math.max @pain, 0
+
+    addSanity: (amount)->
+        @sanity += amount
+
+    reduceSanity: (amount)->
+        @sanity -= amount
+        @sanity = Math.max @sanity, 0
+
+
     # Adds a new secret to your inventory. Try not to get too many of those.
     addSecret: (the_secret)->
         if not the_secret?
@@ -79,10 +94,18 @@ class exports.Player extends Phaser.Sprite
         return @ammo > 0
 
 
+    # If we are able (we have ammo, the gun isn't full, etc)
+    # then reload the gun and decrement our bullet count
     reloadGun: ()->
         return if not @hasAmmunition()
         return if @gun.reload() is false
 
         @ammo--
+
+    # We collided with an item, such as pills, health, a secret.
+    # Use this for flagging if we can pick up the item
+    collideItem: (item)=>
+        if @game.input.keyboard.justPressed(Phaser.Keyboard.E)
+            item.pickUp(@)
 
 
