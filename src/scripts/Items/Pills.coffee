@@ -1,31 +1,15 @@
-Item = require("./Item").Item
+OneTimePickup = require("./OneTimePickup").OneTimePickup
 
-class exports.Pills extends Item
+class exports.Pills extends OneTimePickup
     health_add: 20
 
-    constructor: (@game)->
-        @sprite = @game.make.sprite(
+    makeSprite: ()->
+        return @game.make.sprite(
             @game.rnd.integerInRange(0,@game.width),
             @game.rnd.integerInRange(0,@game.height),
             'pills'
         )
-        @sprite.update = @update
-        @sprite.collide = @collide
-        @sprite.pickUp = @pickUp
-
-
-    update: ()=>
-
-
-    pickUp: (owner)=>
-        @owner = owner
-        @applyEffect()
-        @sprite.destroy()
-
-
-    add: (group)->
-        group.add @sprite
 
     # Give Heals!
     applyEffect: ()->
-        @owner.reducePain 20
+        @owner.reducePain @health_add
