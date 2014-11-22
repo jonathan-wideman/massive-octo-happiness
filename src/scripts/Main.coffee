@@ -9,20 +9,14 @@ window.onload = ()->
 
 gamestate =
     preload: ()->
-        # console.log(new Player)
-        # console.log(new Level)
-        # console.log(new Room)
-
         @level = new Level game
 
-        # game.load.image('phaser', 'assets/img/phaser.png')
         game.load.image 'player', 'assets/img/obj/player.png'
         game.load.image 'player_bullet', 'assets/img/obj/bullet.png'
 
     update: ()->
 
     create: ()->
-        # game.add.sprite(0, 0, 'phaser')
         @level.showRoom(0)
 
         game.physics.startSystem Phaser.Physics.ARCADE
