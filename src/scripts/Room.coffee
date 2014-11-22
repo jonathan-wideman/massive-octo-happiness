@@ -31,12 +31,16 @@ class exports.Room
 
         Pills = require("./Items/Pills").Pills
         SanityPotion = require("./Items/SanityPotion").SanityPotion
-
+        Ammo = require("./Items/Ammo").Ammo
+        Secret = require("./Items/Secrets/Secret").Secret
         pills = new Pills @game
         pills.add @itemGroup
-        sp = new SanityPotion @game
-        sp.add @itemGroup
-
+        potion = new SanityPotion @game
+        potion.add @itemGroup
+        ammo = new Ammo @game
+        ammo.add @itemGroup
+        secret = new Secret @game
+        secret.add @itemGroup
 
     buildDummy: () ->
         backTexture = @game.make.bitmapData 800, 600, 'backTexture', true
