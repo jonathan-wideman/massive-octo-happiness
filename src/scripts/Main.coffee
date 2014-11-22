@@ -25,6 +25,24 @@ gamestate =
         if game.input.keyboard.justPressed(Phaser.Keyboard.ENTER, 10)
             @ui.toggleMap()
 
+        if @player.y < game.world.bounds.y
+            # console.log 'north'
+            @level.travel 'north'
+            @player.y = game.world.bounds.height - @player.height
+        else if @player.y > game.world.bounds.y + game.world.bounds.height
+            # console.log 'south'
+            @level.travel 'south'
+            @player.y = game.world.bounds.y
+        else if @player.x < game.world.bounds.x
+            # console.log 'west'
+            @level.travel 'west'
+            @player.x = game.world.bounds.width - @player.width
+        else if @player.x > game.world.bounds.x + game.world.bounds.width
+            # console.log 'east'
+            @level.travel 'east'
+            @player.x = game.world.bounds.x
+
+
 
     create: ()->
         game.stage.backgroundColor = '#2d2d2d';
@@ -35,7 +53,8 @@ gamestate =
 
         game.physics.startSystem Phaser.Physics.ARCADE
 
-        window.player = new Player(game)
+        @player = new Player(game)
+        window.player = @player
 
         game.physics.enable player, Phaser.Physics.ARCADE
 
@@ -43,3 +62,4 @@ gamestate =
         window.ui = @ui
         @ui.addMap @level.layoutLayer
 
+        console.log game.world.bounds

@@ -47,6 +47,36 @@ class exports.Level extends Phaser.Group
                     @rooms.push(new Room @game, @, x, y)
 
 
+    # switch rooms in a given direction
+    travel: (direction) ->
+        dX = 0
+        dY = 0
+        if direction is 'north'
+            dY = -1
+        else if direction is 'south'
+            dY = +1
+        else if direction is 'west'
+            dX = -1
+        else if direction is 'east'
+            dX = +1
+        else
+            console.log 'cannot travel - invalid direction: ' + direction
+            return
+
+        dX = @currentRoom.mapX + dX
+        dY = @currentRoom.mapY + dY
+        newRoom = _.find @rooms, { mapX: dX, mapY: dY }
+
+        if newRoom
+            console.log 'room found; travelling ' + direction
+            console.log  newRoom
+            @showRoom newRoom.getIndex()
+            return
+
+        console.log 'cannot travel - no rooms to the ' + direction
+        return
+
+
     # find the index of a room object in rooms array
     getRoomIndex: (room) ->
         return _.indexOf @rooms, room
