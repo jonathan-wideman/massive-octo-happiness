@@ -1,4 +1,4 @@
-Player = require("./Player").Player
+Player = require("./Player/Player").Player
 
 
 window.onload = ()->
@@ -7,9 +7,15 @@ window.onload = ()->
 
 gamestate =
     preload: ()->
-        console.log(new Player)
-        game.load.image('phaser', 'assets/img/phaser.png');
+        game.load.image 'player', 'assets/img/obj/player.png'
+        game.load.image 'player_bullet', 'assets/img/obj/bullet.png'
 
     create: ()->
-        game.add.sprite(0, 0, 'phaser');
+        game.physics.startSystem Phaser.Physics.ARCADE
+
+        window.player = new Player(game)
+        game.add.existing player
+        game.add.existing player.gun
+
+        game.physics.enable player, Phaser.Physics.ARCADE
 
