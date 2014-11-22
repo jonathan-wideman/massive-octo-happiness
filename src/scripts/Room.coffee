@@ -11,6 +11,7 @@ class exports.Room
         # console.log @
 
     add: () ->
+        console.log "ADDINGS"
         @level.group.add @backImg
         @level.group.add @itemGroup
 
@@ -23,7 +24,7 @@ class exports.Room
 
     build: () ->
         @buildDummy()
-        @itemGroup = new ItemGroup @game
+        @itemGroup = new ItemGroup @game, null
 
         Pills = require("./Items/Pills").Pills
         pills = new Pills(@game)
