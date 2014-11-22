@@ -12,6 +12,8 @@ class exports.Item
 
     applyEffect: ()-> #stub
 
+    collide: ()-> #stub
+
     isHeld: ()->
         return @owner? and @holdable
 

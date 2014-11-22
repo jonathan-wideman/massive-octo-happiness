@@ -4,18 +4,25 @@ class exports.Pills extends Item
     health_add: 20
 
     constructor: (@game)->
-        @sprite = @game.make.sprite(80, 80, 'pills')
+        @sprite = @game.make.sprite(300, 250, 'pills')
         @sprite.update = @update
+        @sprite.collide = @collide
 
 
     update: ()=>
 
 
-    add: (group)->
-        if not group?
-            @game.add.existing(@sprite)
-        else
-            group.add @sprite
+    collide: (player)=>
+        @pickUp(player)
+        @applyEffect()
+        @sprite.destroy()
 
+    pickUp: (owner)->
+        @owner = owner
+
+    add: (group)->
+        group.add @sprite
+
+    # Give Heals!
     applyEffect: ()->
         @owner.reducePain 20

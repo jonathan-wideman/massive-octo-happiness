@@ -61,12 +61,14 @@ class exports.Player extends Phaser.Sprite
 
     reducePain: (amount)->
         @pain -= amount
+        @pain = Math.max @pain, 0
 
     addSanity: (amount)->
         @sanity += amount
 
     reduceSanity: (amount)->
         @sanity -= amount
+        @sanity = Math.max @sanity, 0
 
 
     # Adds a new secret to your inventory. Try not to get too many of those.
