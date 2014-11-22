@@ -31,13 +31,15 @@ class exports.Player extends Phaser.Sprite
     update: ()=>
         @controller.update()
 
+        @kill() if @isYouDead()
+
 
     # Dead Conditions:
     # - Sanity hits 0 (you lost your wits!)
     # - Pain hits 100 (ouch that probably hurts)
     # - Sanity and pain intersect. if you lose 50 sanity and gain 50 pain,
     #   now you be ded.
-    isDead: ()->
+    isYouDead: ()->
         lost_sanity = 100 - @sanity
 
         return (@pain + lost_sanity) >= 100
