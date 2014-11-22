@@ -1,4 +1,5 @@
 Player = require("./Player/Player").Player
+Ui = require("./Ui/Ui").Ui
 Level = require("./Level").Level
 Room = require("./Room").Room
 
@@ -28,3 +29,6 @@ gamestate =
         game.add.existing player.gun
 
         game.physics.enable player, Phaser.Physics.ARCADE
+
+        new Ui(game, player)
+
