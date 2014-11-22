@@ -1,7 +1,7 @@
 
 
 class exports.Controller
-    constructor: (@player, @game)->
+    constructor: (@game, @player)->
         @cursors = game.input.keyboard.createCursorKeys()
 
     update: ()->
