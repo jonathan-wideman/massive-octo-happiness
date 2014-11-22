@@ -24,6 +24,7 @@ buildScripts = ()->
             extensions: ['.coffee']
             debug: true
         )
+        .on('error', (err)-> console.log err.message)
         .pipe(rename('Main.js'))
         .pipe(gulp.dest('build/js'))
 
