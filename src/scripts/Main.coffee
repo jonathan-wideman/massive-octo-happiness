@@ -1,6 +1,4 @@
-console.log "hi"
-
-
+Player = require("./Player").Player
 
 
 window.onload = ()->
@@ -9,6 +7,7 @@ window.onload = ()->
 
 gamestate =
     preload: ()->
+        console.log(new Player)
         game.load.image('phaser', 'assets/img/phaser.png');
 
     create: ()->
