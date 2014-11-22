@@ -1,5 +1,6 @@
 Controller = require("./Controller").Controller
 Gun = require("./Gun").Gun
+Secret = require("../Secrets/Secret").Secret
 
 class exports.Player extends Phaser.Sprite
     # How fast we can move
@@ -16,6 +17,8 @@ class exports.Player extends Phaser.Sprite
 
 
     constructor: (@game)->
+        @secrets = []
+
         x = @game.world.centerX
         y = @game.world.centerY
         super @game, x, y, 'player', 1
@@ -32,6 +35,31 @@ class exports.Player extends Phaser.Sprite
         @controller.update()
 
         @kill() if @isYouDead()
+
+        # Tell the secrets to update.
+        # Some secrets might have Time-based
+        # effects, while most (all?) are per-room
+        secret.update() for secret in @secrets
+
+
+
+    # iterate over the secrets and have them apply
+    # their effects. Usually that effect is making you
+    # go insane! Typically, this method is called when
+    # you switch rooms
+    applySecrets: ()->
+        secret.applyEffect() for secret in @secrets
+
+
+
+    # Adds a new secret to your inventory. Try not to get too many of those.
+    addSecret: (the_secret)->
+        if not the_secret?
+            the_secret =  new Secret(@game)
+
+        the_secret.player = @
+
+        @secrets.push the_secret
 
 
     # Dead Conditions:

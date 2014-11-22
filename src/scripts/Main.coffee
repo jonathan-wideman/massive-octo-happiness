@@ -1,5 +1,5 @@
 Player = require("./Player/Player").Player
-
+Ui = require("./Ui/Ui").Ui
 
 window.onload = ()->
     window.game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game-container', gamestate);
@@ -18,4 +18,6 @@ gamestate =
         game.add.existing player.gun
 
         game.physics.enable player, Phaser.Physics.ARCADE
+
+        new Ui(game, player)
 
