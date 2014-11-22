@@ -31,7 +31,7 @@ class exports.Room
 
         Pills = require("./Items/Pills").Pills
         SanityPotion = require("./Items/SanityPotion").SanityPotion
-        console.log SanityPotion
+
         pills = new Pills @game
         pills.add @itemGroup
         sp = new SanityPotion @game
