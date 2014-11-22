@@ -2,10 +2,7 @@
 
 class exports.Room
 
-    constructor: (game)->
-
-        @game = game
-
+    constructor: (@game, @level)->
         @backImgName = 'blah.png'
         @backImg = null
         @tiles = null
@@ -14,11 +11,10 @@ class exports.Room
         # console.log @
 
     add: () ->
-        @game.add.existing @backImg
+        @level.group.add @backImg
 
     remove: () ->
-        if @backImg.parent
-            @backImg.parent.remove @backImg
+        @level.group.remove @backImg
 
 
     getRandom: () ->
