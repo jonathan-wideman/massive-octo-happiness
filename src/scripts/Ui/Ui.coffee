@@ -14,4 +14,7 @@ class exports.Ui
         @group.add @sanity
 
         @sanity.update = ()=>
-            @sanity.text = "Player Sanity: #{@player.sanity}\nSecrets: #{@player.secrets.length;}"
+            @sanity.text = "Player Sanity: #{@player.sanity}\n
+            Secrets: #{@player.secrets.length;}\n
+            Ammo: #{@player.ammo}\n
+            Loaded: #{@player.gun.loaded_bullets}"

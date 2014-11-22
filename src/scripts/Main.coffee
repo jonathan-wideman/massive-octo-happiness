@@ -28,5 +28,5 @@ gamestate =
 
         game.physics.enable player, Phaser.Physics.ARCADE
 
-        new Ui(game, player)
+        window.ui = new Ui(game, player)
 

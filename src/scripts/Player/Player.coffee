@@ -13,6 +13,8 @@ class exports.Player extends Phaser.Sprite
     pain: 0
 
     # Ammunitions you got for dat dere gun
+    # This counts how much ammo you've got 'in hand';
+    # rounds loaded in the gun don't count.
     ammo: 6
 
 
@@ -46,14 +48,12 @@ class exports.Player extends Phaser.Sprite
         secret.update() for secret in @secrets
 
 
-
     # iterate over the secrets and have them apply
     # their effects. Usually that effect is making you
     # go insane! Typically, this method is called when
     # you switch rooms
     applySecrets: ()->
         secret.applyEffect() for secret in @secrets
-
 
 
     # Adds a new secret to your inventory. Try not to get too many of those.
@@ -79,5 +79,10 @@ class exports.Player extends Phaser.Sprite
         return @ammo > 0
 
 
-    firedGun: ()->
+    reloadGun: ()->
+        return if not @hasAmmunition()
+        return if @gun.reload() is false
+
         @ammo--
+
+
