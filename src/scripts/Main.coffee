@@ -15,6 +15,8 @@ gamestate =
         game.load.image 'player_bullet', 'assets/img/obj/bullet.png'
 
     update: ()->
+        if game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR, 10)
+            @level.nextRoom()
 
     create: ()->
         @level.showRoom(0)

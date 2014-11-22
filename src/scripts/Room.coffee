@@ -20,6 +20,7 @@ class exports.Room
         if @backImg.parent
             @backImg.parent.remove @backImg
 
+
     getRandom: () ->
         return Math.floor Math.random() * 100
 
@@ -28,7 +29,6 @@ class exports.Room
 
     buildDummy: () ->
         backTexture = @game.make.bitmapData 800, 600, 'backTexture', true
-        console.log @getRandom()
         backTexture.fill @getRandom(), @getRandom(), @getRandom(), 1
         @backImg = @game.make.image 0, 0
         @backImg.loadTexture backTexture
