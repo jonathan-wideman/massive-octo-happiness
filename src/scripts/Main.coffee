@@ -15,6 +15,7 @@ gamestate =
         game.load.image 'pills', 'assets/img/obj/pills.png'
 
         game.load.image('map_tiles', 'assets/img/ui/mapTiles.png');
+        game.load.image('youAreHere', 'assets/img/ui/youAreHere.png');
 
 
     update: ()->
@@ -29,6 +30,7 @@ gamestate =
         game.stage.backgroundColor = '#2d2d2d';
 
         @level = new Level game
+        window.level = @level
         @level.showRoom(0)
 
         game.physics.startSystem Phaser.Physics.ARCADE

@@ -2,7 +2,7 @@ ItemGroup = require("./Items/ItemGroup").ItemGroup
 
 class exports.Room
 
-    constructor: (@game, @level)->
+    constructor: (@game, @level, @mapX, @mapY)->
         @backImgName = 'blah.png'
         @backImg = null
         @tiles = null
@@ -18,6 +18,9 @@ class exports.Room
     remove: () ->
         @level.group.remove @backImg
         @level.group.remove @itemGroup
+
+    getIndex: () ->
+        return @level.getRoomIndex @
 
     getRandom: () ->
         return Math.floor Math.random() * 100
