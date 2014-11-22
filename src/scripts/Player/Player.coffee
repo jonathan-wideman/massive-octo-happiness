@@ -68,9 +68,7 @@ class exports.Player extends Phaser.Sprite
     # - Sanity and pain intersect. if you lose 50 sanity and gain 50 pain,
     #   now you be ded.
     isYouDead: ()->
-        lost_sanity = 100 - @sanity
-
-        return (@pain + lost_sanity) >= 100
+        return @pain > @sanity
 
 
     hasAmmunition: ()->
