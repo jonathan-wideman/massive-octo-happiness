@@ -16,10 +16,6 @@ class exports.Room
     remove: () ->
         @level.group.remove @backImg
 
-        return
-        if @backImg.parent
-            @backImg.parent.remove @backImg
-
 
     getRandom: () ->
         return Math.floor Math.random() * 100

@@ -10,7 +10,7 @@ window.onload = ()->
 
 gamestate =
     preload: ()->
-        @level = new Level game, @
+        @level = new Level game
 
         game.load.image 'player', 'assets/img/obj/player.png'
         game.load.image 'player_bullet', 'assets/img/obj/bullet.png'
