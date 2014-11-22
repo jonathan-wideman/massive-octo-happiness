@@ -10,16 +10,42 @@ class exports.Level extends Phaser.Group
         @rooms = []
         @currentRoom = null
 
+        # layout is the 'map' of how all the rooms are arranges; represented as a tilemap
+        @layout = null
+
         @build()
         # console.log @
 
     build: () ->
         @buildRooms 10
+        # build a layout of the rooms, width by height
+        @buildLayout 5, 5
 
     buildRooms: (count) ->
         @rooms = []
         for i in [0...count] by 1
             @rooms.push(new Room @game, @)
+
+
+    buildLayout: (width, height) ->
+        # Creates a blank tilemap
+        @layout = @game.add.tilemap();
+
+        # Add a Tileset image to the map
+        @layout.addTilesetImage('map', 'map_tiles');
+
+        # Creates a new blank layer and sets the map dimensions.
+        # In this case the map is width by height tiles in size and the tiles are 32x32 pixels in size.
+        @layoutLayer = @layout.create('level1', width, height, 32, 32);
+        @layoutLayer.parent.remove @layoutLayer
+
+        # populate random squares on the layer
+        for x in [0...width] by 1
+            for y in [0...height] by 1
+                if Math.random() > 0.6
+                    @layout.putTile(1, x, y);
+
+
 
 
     # Shows the room at `index` in our array of rooms.
@@ -30,7 +56,6 @@ class exports.Level extends Phaser.Group
 
         @currentRoom = @rooms[index]
         @currentRoom.add()
-
 
     nextRoom: () ->
         index = _.indexOf @rooms, @currentRoom

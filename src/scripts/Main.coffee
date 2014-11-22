@@ -14,17 +14,20 @@ gamestate =
         game.load.image 'player_bullet', 'assets/img/obj/bullet.png'
         game.load.image 'pills', 'assets/img/obj/pills.png'
 
+        game.load.image('map_tiles', 'assets/img/ui/mapTiles.png');
+
+
     update: ()->
         if game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR, 10)
             @level.nextRoom()
 
-        #game.physics.arcade.overlap(player, items, @collideItems, null, this)
+        if game.input.keyboard.justPressed(Phaser.Keyboard.ENTER, 10)
+            @ui.toggleMap()
 
-
-    collideItems: (player, item)->
-        item.collide(player)
 
     create: ()->
+        game.stage.backgroundColor = '#2d2d2d';
+
         @level = new Level game
         @level.showRoom(0)
 
@@ -34,5 +37,7 @@ gamestate =
 
         game.physics.enable player, Phaser.Physics.ARCADE
 
-        window.ui = new Ui(game, player)
+        @ui = new Ui(game, player)
+        window.ui = @ui
+        @ui.addMap @level.layoutLayer
 
