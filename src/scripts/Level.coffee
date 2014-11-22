@@ -1,9 +1,9 @@
 Room = require("./Room").Room
 
-class exports.Level
+class exports.Level extends Phaser.Group
 
-    constructor: (game)->
-        @game = game
+    constructor: (@game)->
+        @group = @game.add.group()
 
         @rooms = []
         @currentRoom = null
@@ -11,39 +11,24 @@ class exports.Level
         @build()
         # console.log @
 
-
     build: () ->
         @buildRooms 10
 
     buildRooms: (count) ->
         @rooms = []
         for i in [0...count] by 1
-            # build a new room
-            @rooms.push(new Room @game)
+            @rooms.push(new Room @game, @)
 
+
+    # Shows the room at `index` in our array of rooms.
     showRoom: (index) ->
         # get rid of current room if necessary
         if @currentRoom
             @currentRoom.remove()
 
-        # also temporarily remove the player
-        player = window.player
-        if player
-            playerParent = player.parent
-            playerParent.remove player
-            # and his gun
-            playerParent.remove player.gun
-            playerParent.remove player.gun.pool
-
         @currentRoom = @rooms[index]
         @currentRoom.add()
 
-        # re-add the player
-        if player
-            playerParent.add player
-            # and his gun
-            playerParent.add player.gun
-            playerParent.add player.gun.pool
 
     nextRoom: () ->
         index = _.indexOf @rooms, @currentRoom

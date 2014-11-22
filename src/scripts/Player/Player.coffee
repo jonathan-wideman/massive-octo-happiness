@@ -25,8 +25,8 @@ class exports.Player extends Phaser.Sprite
 
         @anchor.setTo 0.5, 0.5
 
-        @controller = new Controller @, @game
-        @gun = new Gun @, @game
+        @controller = new Controller @game, @
+        @gun = new Gun @game, @
 
         this
 

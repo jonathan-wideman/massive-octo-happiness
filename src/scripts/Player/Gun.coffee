@@ -13,7 +13,7 @@ class exports.Gun extends Phaser.Sprite
     # How long you have to wait (ms) between shooting
     fire_delay: 100
 
-    constructor: (@player, @game)->
+    constructor: (@game, @player)->
         super @game, 0, 0, 'player_bullet', 1
         @anchor.setTo 0.5, 0.5
 
