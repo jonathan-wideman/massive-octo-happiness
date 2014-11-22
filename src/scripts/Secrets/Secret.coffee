@@ -1,17 +1,20 @@
+Item = require("../Items/Item").Item
 
-
-class exports.Secret
-
+class exports.Secret extends Item
     MAJOR: 'MAJOR'
     MINOR: 'MINOR'
+    type: 'MINOR'
+    holdable: true
 
-    constructor: (@game)->
+    @isMajor: (the_secret)->
+        return (the_secret.type is @MAJOR)
 
-
-    update: ()->
+    @isMinor: (the_secret)->
+        return (the_secret.type is @MINOR)
 
 
     applyEffect: ()->
-        return if not @player?
+        return if not @isHeld()
 
-        @player.sanity -= 10
+        @owner.reduceSanity 10
+

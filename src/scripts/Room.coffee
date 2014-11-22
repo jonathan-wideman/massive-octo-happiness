@@ -1,4 +1,4 @@
-
+ItemGroup = require("./Items/ItemGroup").ItemGroup
 
 class exports.Room
 
@@ -11,10 +11,13 @@ class exports.Room
         # console.log @
 
     add: () ->
+        console.log "ADDINGS"
         @level.group.add @backImg
+        @level.group.add @itemGroup
 
     remove: () ->
         @level.group.remove @backImg
+        @level.group.remove @itemGroup
 
     getIndex: () ->
         return @level.getRoomIndex @
@@ -24,9 +27,17 @@ class exports.Room
 
     build: () ->
         @buildDummy()
+        @itemGroup = new ItemGroup @game, null
+
+        Pills = require("./Items/Pills").Pills
+        pills = new Pills(@game)
+        pills.add(@itemGroup)
+
 
     buildDummy: () ->
         backTexture = @game.make.bitmapData 800, 600, 'backTexture', true
         backTexture.fill @getRandom(), @getRandom(), @getRandom(), 1
         @backImg = @game.make.image 0, 0
         @backImg.loadTexture backTexture
+
+

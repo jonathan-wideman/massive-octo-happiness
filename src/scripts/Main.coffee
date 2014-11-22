@@ -12,6 +12,7 @@ gamestate =
     preload: ()->
         game.load.image 'player', 'assets/img/obj/player.png'
         game.load.image 'player_bullet', 'assets/img/obj/bullet.png'
+        game.load.image 'pills', 'assets/img/obj/pills.png'
 
         game.load.image('map_tiles', 'assets/img/ui/mapTiles.png');
         game.load.image('youAreHere', 'assets/img/ui/youAreHere.png');
@@ -30,7 +31,6 @@ gamestate =
 
         @level = new Level game
         window.level = @level
-
         @level.showRoom(0)
 
         game.physics.startSystem Phaser.Physics.ARCADE
