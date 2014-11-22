@@ -56,6 +56,19 @@ class exports.Player extends Phaser.Sprite
         secret.applyEffect() for secret in @secrets
 
 
+    addPain: (amount)->
+        @pain += amount
+
+    reducePain: (amount)->
+        @pain -= amount
+
+    addSanity: (amount)->
+        @sanity += amount
+
+    reduceSanity: (amount)->
+        @sanity -= amount
+
+
     # Adds a new secret to your inventory. Try not to get too many of those.
     addSecret: (the_secret)->
         if not the_secret?

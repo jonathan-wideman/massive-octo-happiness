@@ -14,6 +14,7 @@ gamestate =
 
         game.load.image 'player', 'assets/img/obj/player.png'
         game.load.image 'player_bullet', 'assets/img/obj/bullet.png'
+        game.load.image 'pills', 'assets/img/obj/pills.png'
 
     update: ()->
         if game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR, 10)
@@ -27,6 +28,10 @@ gamestate =
         window.player = new Player(game)
 
         game.physics.enable player, Phaser.Physics.ARCADE
+
+        Pills = require("./Items/Item").Item
+        peeeeelllsssss = new Pills(game)
+        peeeeelllsssss.add()
 
         window.ui = new Ui(game, player)
 
