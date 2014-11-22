@@ -1,10 +1,17 @@
 
 
 class exports.Gun extends Phaser.Sprite
+    # Number of bullets in the bullet @pool (NOT ammo. Check Player.ammo)
     number_of_bullets: 12
+
+    # When we fired the last shot
     last_bullet_time: 0
-    BULLET_SPEED: 500
-    FIRE_DELAY: 100
+
+    # How fast bullets move
+    speed: 500
+
+    # How long you have to wait (ms) between shooting
+    fire_delay: 100
 
     constructor: (@player, @game)->
         super @game, 0, 0, 'player_bullet', 1
@@ -24,9 +31,21 @@ class exports.Gun extends Phaser.Sprite
         if @.game.input.activePointer.isDown
             @shoot()
 
-
+    # Attempts to shoot the gun.
+    # Currently there are a few conditions on shooting:
+    #
+    #   - you can't fire too fast (we check if @fire_delay) has elapsed
+    #       since you last shot
+    #   - you can't shoot if you don't have any ammo
+    #
+    # Bullets are drawn from @pool and recycled
+    #
     shoot: ()=>
-        return if @game.time.now - @last_bullet_time < @FIRE_DELAY
+        return if @game.time.now - @last_bullet_time < @fire_delay
+
+        if not @player.hasAmmunition()
+            return
+
         @last_bullet_time = @game.time.now
 
         bullet = @pool.getFirstDead()
@@ -38,10 +57,11 @@ class exports.Gun extends Phaser.Sprite
         bullet.reset @x, @y
         bullet.rotation = @rotation
 
-        bullet.body.velocity.x = Math.cos(bullet.rotation) * @BULLET_SPEED
-        bullet.body.velocity.y = Math.sin(bullet.rotation) * @BULLET_SPEED
+        bullet.body.velocity.x = Math.cos(bullet.rotation) * @speed
+        bullet.body.velocity.y = Math.sin(bullet.rotation) * @speed
 
 
+    # Populates the initial bullet @pool.
     _fillPool: ()->
         for i in [0..@number_of_bullets]
             bullet = @game.add.sprite 0, 0, 'player_bullet'

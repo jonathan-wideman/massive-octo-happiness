@@ -2,6 +2,7 @@ Controller = require("./Controller").Controller
 Gun = require("./Gun").Gun
 
 class exports.Player extends Phaser.Sprite
+    # How fast we can move
     speed: 200
 
     # using Secrets deplete sanity over time
@@ -10,6 +11,8 @@ class exports.Player extends Phaser.Sprite
     # Being attacked adds to your pain over time
     pain: 0
 
+    # Ammunitions you got for dat dere gun
+    ammo: 6
 
 
     constructor: (@game)->
@@ -25,6 +28,10 @@ class exports.Player extends Phaser.Sprite
         this
 
 
+    update: ()=>
+        @controller.update()
+
+
     # Dead Conditions:
     # - Sanity hits 0 (you lost your wits!)
     # - Pain hits 100 (ouch that probably hurts)
@@ -36,5 +43,5 @@ class exports.Player extends Phaser.Sprite
         return (@pain + lost_sanity) >= 100
 
 
-    update: ()=>
-        @controller.update()
+    hasAmmunition: ()->
+        return @ammo > 0
