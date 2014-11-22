@@ -27,8 +27,12 @@ class exports.Room
         @itemGroup = new ItemGroup @game, null
 
         Pills = require("./Items/Pills").Pills
-        pills = new Pills(@game)
-        pills.add(@itemGroup)
+        SanityPotion = require("./Items/SanityPotion").SanityPotion
+        console.log SanityPotion
+        pills = new Pills @game
+        pills.add @itemGroup
+        sp = new SanityPotion @game
+        sp.add @itemGroup
 
 
     buildDummy: () ->
