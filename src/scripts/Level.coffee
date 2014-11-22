@@ -7,6 +7,24 @@ class exports.Level extends Phaser.Group
     constructor: (@game)->
         @group = @game.add.group()
 
+        @north =
+            name: 'north'
+            dX: 0
+            dY: -1
+        @south =
+            name: 'south'
+            dX: 0
+            dY: 1
+        @west =
+            name: 'west'
+            dX: -1
+            dY: 0
+        @east =
+            name: 'east'
+            dX: 1
+            dY: 0
+        @dirs = [@north, @south, @west, @east]
+
         @rooms = []
         @currentRoom = null
 
@@ -19,7 +37,7 @@ class exports.Level extends Phaser.Group
     build: () ->
         # @buildRooms 10
         # build a layout of the rooms, width by height
-        @buildLayout 5, 5
+        @buildLayout 10, 10
 
     buildRooms: (count) ->
         @rooms = []
@@ -40,12 +58,97 @@ class exports.Level extends Phaser.Group
         @layoutLayer.parent.remove @layoutLayer
 
         # populate random squares on the layer
-        for x in [0...width] by 1
-            for y in [0...height] by 1
-                if Math.random() > 0.6
-                    @layout.putTile(1, x, y);
-                    @rooms.push(new Room @game, @, x, y)
+        # for x in [0...width] by 1
+        #     for y in [0...height] by 1
+        #         if Math.random() > 0.6
+        #             @layout.putTile 1, x, y;
+        #             @rooms.push(new Room @game, @, x, y)
 
+        # width = level depth, so the number of rooms desired should be
+        # a minimum of depth, and a maximum of the filled level
+        minRooms = width * 2
+        maxRooms = width * height
+        desiredRooms = game.rnd.between minRooms, maxRooms
+
+        @buildPath(desiredRooms)
+
+
+    # random-steps a path from start to finish
+    buildPath: (count) ->
+        # place a starting location
+        startX = Math.floor(Math.random() * @layout.width)
+        startY = Math.floor(Math.random() * @layout.height)
+        @layout.putTile 2, startX, startY ;
+        placedRoom = new Room @game, @, startX, startY
+        @rooms.push placedRoom
+
+        # finishX = Math.floor(Math.random() * @layout.width)
+        # while finishX == startX
+        #     finishX = Math.floor(Math.random() * @layout.width)
+        # finishY = Math.floor(Math.random() * @layout.height)
+        # while finishY == startY
+        #     finishY = Math.floor(Math.random() * @layout.height)
+        # @layout.putTile(3, finishX, finishY);
+        # @rooms.push(new Room @game, @, finishX, finishY)
+
+        repeats = 0
+        while @rooms.length <= count and repeats < 10
+            if placedRoom
+                repeats = 0
+                lastRoom = placedRoom
+            repeats += 1
+            placedRoom = @buildPathStep lastRoom.mapX, lastRoom.mapY
+
+
+        # replace the last room with a finish room
+        @layout.putTile 3, lastRoom.mapX, lastRoom.mapY
+
+
+
+    # place a room in a random direction from a point
+    # returns room
+    buildPathStep: (x, y) ->
+        # step in a random direction
+        dirs = _.clone(@dirs)
+
+        success = false
+        while !success and dirs.length > 0
+            dir = @game.rnd.pick dirs
+            _.pull dirs, dir
+            nX = x + dir.dX
+            nY = y + dir.dY
+            # console.log 'trying to place room to the ' + dir.name
+            if @canPlaceRoom nX, nY
+                newRoom = @placeRoom nX, nY
+                success = true
+                # console.log 'placed room'
+        if !success
+            # console.log 'failed to place room - no space'
+            return null
+        # step complete
+        return newRoom
+
+
+    canPlaceRoom: (x, y) ->
+        # is the space on the map?
+        if x < 0 or y < 0 or x >= @layout.width or y >= @layout.height
+            return false
+        # is the space itself occupied?
+        if @layout.getTile x, y
+            return false
+
+        # is any adjacent tile occupied?
+        # - yea leeeets not do this one
+
+        # eveything is clear; return true
+        return true
+
+    # place a room and return it
+    placeRoom: (x, y) ->
+        @layout.putTile 1, x, y;
+        newRoom = new Room @game, @, x, y
+        @rooms.push newRoom
+        return newRoom
 
     # switch rooms in a given direction
     travel: (direction) ->
