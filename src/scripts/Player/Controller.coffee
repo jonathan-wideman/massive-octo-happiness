@@ -17,3 +17,7 @@ class exports.Controller
             @player.body.velocity.y = -1 * @player.speed
         else if @cursors.down.isDown
             @player.body.velocity.y = @player.speed
+
+
+        if @game.input.keyboard.justPressed(Phaser.Keyboard.R)
+            @player.reloadGun()

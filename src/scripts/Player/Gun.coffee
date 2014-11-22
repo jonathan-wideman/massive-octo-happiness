@@ -13,6 +13,19 @@ class exports.Gun extends Phaser.Sprite
     # How long you have to wait (ms) between shooting
     fire_delay: 100
 
+    # How many bullets you've got in the gun
+    loaded_bullets: 6
+
+    # Maximum ammunition that can be loaded at once
+    # into this weapon
+    max_bullets: 6
+
+    # When we last reloaded a bullet
+    last_reloaded_time: 0
+
+    # How long you have to wait (ms) between reloading
+    reload_delay: 500
+
     constructor: (@game, @player)->
         super @game, 0, 0, 'player_bullet', 1
         @anchor.setTo 0.5, 0.5
@@ -45,7 +58,7 @@ class exports.Gun extends Phaser.Sprite
     #
     shoot: ()=>
         return if @game.time.now - @last_bullet_time < @fire_delay
-        return if not @player.hasAmmunition()
+        return if @loaded_bullets is 0
 
         @last_bullet_time = @game.time.now
 
@@ -61,8 +74,24 @@ class exports.Gun extends Phaser.Sprite
         bullet.body.velocity.x = Math.cos(bullet.rotation) * @speed
         bullet.body.velocity.y = Math.sin(bullet.rotation) * @speed
 
-        @player.firedGun()
+        @loaded_bullets--
 
+
+    # Attempts to put a bullet in the gun. If
+    # we've loaded the max number of bullets,
+    # then return false (so the player knows if
+    # we successfully loaded a round). Likewise,
+    # if we try reloading too quickly, return
+    # false.Otherwise load the bullet and return
+    # the number of loaded bullets
+    reload: ()->
+        if @loaded_bullets is @max_bullets
+            return false
+
+        return false if @game.time.now - @last_reloaded_time < @reload_delay
+        @last_reloaded_time = @game.time.now
+
+        ++@loaded_bullets
 
     # Populates the initial bullet @pool.
     _fillPool: ()->
