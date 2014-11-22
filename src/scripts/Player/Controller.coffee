@@ -18,6 +18,7 @@ class exports.Controller
         else if @cursors.down.isDown
             @player.body.velocity.y = @player.speed
 
-
+        # TODO: we'll want to switch this so we've got our check-ammo
+        # screen, rather than explicitly pressing the R key to reload
         if @game.input.keyboard.justPressed(Phaser.Keyboard.R)
             @player.reloadGun()
