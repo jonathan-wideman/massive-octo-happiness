@@ -17,14 +17,14 @@ class exports.Level extends Phaser.Group
         # console.log @
 
     build: () ->
-        @buildRooms 10
+        # @buildRooms 10
         # build a layout of the rooms, width by height
         @buildLayout 5, 5
 
     buildRooms: (count) ->
         @rooms = []
         for i in [0...count] by 1
-            @rooms.push(new Room @game, @)
+            @rooms.push(new Room @game, @, 0, 0)
 
 
     buildLayout: (width, height) ->
@@ -44,9 +44,12 @@ class exports.Level extends Phaser.Group
             for y in [0...height] by 1
                 if Math.random() > 0.6
                     @layout.putTile(1, x, y);
+                    @rooms.push(new Room @game, @, x, y)
 
 
-
+    # find the index of a room object in rooms array
+    getRoomIndex: (room) ->
+        return _.indexOf @rooms, room
 
     # Shows the room at `index` in our array of rooms.
     showRoom: (index) ->

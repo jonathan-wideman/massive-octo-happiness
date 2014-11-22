@@ -2,7 +2,7 @@
 
 class exports.Room
 
-    constructor: (@game, @level)->
+    constructor: (@game, @level, @mapX, @mapY)->
         @backImgName = 'blah.png'
         @backImg = null
         @tiles = null
@@ -16,6 +16,8 @@ class exports.Room
     remove: () ->
         @level.group.remove @backImg
 
+    getIndex: () ->
+        return @level.getRoomIndex @
 
     getRandom: () ->
         return Math.floor Math.random() * 100
