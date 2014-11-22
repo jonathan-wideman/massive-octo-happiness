@@ -1,4 +1,4 @@
-Player = require("./Player").Player
+Player = require("./Player/Player").Player
 
 
 window.onload = ()->
@@ -7,9 +7,12 @@ window.onload = ()->
 
 gamestate =
     preload: ()->
-        console.log(new Player)
+        #game.load.spritesheet('player', 'assets/img/dude.png', 32, 48);
         game.load.image('phaser', 'assets/img/phaser.png');
+        game.load.image('player', 'assets/img/obj/player.png');
 
     create: ()->
-        game.add.sprite(0, 0, 'phaser');
+        #game.add.sprite(0, 0, 'phaser');
+        pp = new Player(game)
+        game.add.existing(pp)
 
