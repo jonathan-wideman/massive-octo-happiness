@@ -31,11 +31,13 @@ class exports.Room
 
         Pills = require("./Items/Pills").Pills
         SanityPotion = require("./Items/SanityPotion").SanityPotion
-
+        Ammo = require("./Items/Ammo").Ammo
         pills = new Pills @game
         pills.add @itemGroup
-        sp = new SanityPotion @game
-        sp.add @itemGroup
+        potion = new SanityPotion @game
+        potion.add @itemGroup
+        ammo = new Ammo @game
+        ammo.add @itemGroup
 
 
     buildDummy: () ->
