@@ -1,6 +1,6 @@
 Controller = require("./Controller").Controller
 Gun = require("./Gun").Gun
-Secret = require("../Secrets/Secret").Secret
+# Secret = require("../Secrets/Secret").Secret
 
 class exports.Player extends Phaser.Sprite
     # How fast we can move
@@ -70,11 +70,13 @@ class exports.Player extends Phaser.Sprite
         @sanity -= amount
         @sanity = Math.max @sanity, 0
 
+    addAmmo: (amount)->
+        @ammo += amount
 
     # Adds a new secret to your inventory. Try not to get too many of those.
     addSecret: (the_secret)->
-        if not the_secret?
-            the_secret =  new Secret(@game)
+        # if not the_secret?
+            # the_secret =  new Secret(@game)
 
         the_secret.player = @
 
