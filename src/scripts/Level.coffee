@@ -37,6 +37,7 @@ class exports.Level extends Phaser.Group
         # Creates a new blank layer and sets the map dimensions.
         # In this case the map is width by height tiles in size and the tiles are 32x32 pixels in size.
         @layoutLayer = @layout.create('level1', width, height, 32, 32);
+        @layoutLayer.parent.remove @layoutLayer
 
         # populate random squares on the layer
         for x in [0...width] by 1
@@ -45,16 +46,7 @@ class exports.Level extends Phaser.Group
                     @layout.putTile(1, x, y);
 
 
-    toggleMap: () ->
-        @layoutLayer.visible = !@layoutLayer.visible
 
-    addMap: () ->
-        if @layout and !@layout.parent
-            @game.add.existing @layout
-
-    removeMap: () ->
-        if @layout
-            @layout.parent.remove @layout
 
     # Shows the room at `index` in our array of rooms.
     showRoom: (index) ->
@@ -63,10 +55,7 @@ class exports.Level extends Phaser.Group
             @currentRoom.remove()
 
         @currentRoom = @rooms[index]
-        # @currentRoom.add()
-
-
-        # @addMap()
+        @currentRoom.add()
 
     nextRoom: () ->
         index = _.indexOf @rooms, @currentRoom

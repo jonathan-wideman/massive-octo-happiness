@@ -18,8 +18,10 @@ gamestate =
 
     update: ()->
         if game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR, 10)
-            @level.toggleMap()
-            # @level.nextRoom()
+            @level.nextRoom()
+
+        if game.input.keyboard.justPressed(Phaser.Keyboard.ENTER, 10)
+            @ui.toggleMap()
 
 
     create: ()->
@@ -35,6 +37,7 @@ gamestate =
 
         game.physics.enable player, Phaser.Physics.ARCADE
 
-        window.ui = new Ui(game, player)
-
+        @ui = new Ui(game, player)
+        window.ui = @ui
+        @ui.addMap @level.layoutLayer
 
