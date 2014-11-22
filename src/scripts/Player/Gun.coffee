@@ -20,9 +20,8 @@ class exports.Gun extends Phaser.Sprite
         @y = @player.y
 
         @rotation = @game.physics.arcade.angleToPointer(@)
-        console.log "UP"
+
         if @.game.input.activePointer.isDown
-            console.log "POINT"
             @shoot()
 
 
