@@ -26,6 +26,8 @@ class exports.Gun extends Phaser.Sprite
     # How long you have to wait (ms) between reloading
     reload_delay: 500
 
+    click_time: 100
+
     constructor: (@game, @player)->
         super @game, 0, 0, 'player_bullet', 1
         @anchor.setTo 0.5, 0.5
@@ -36,6 +38,8 @@ class exports.Gun extends Phaser.Sprite
         @player.group.add @
         @player.group.add @pool
 
+        @game.input.mouse.mouseDownCallback = @shoot
+
         this
 
     update: ()=>
@@ -44,8 +48,6 @@ class exports.Gun extends Phaser.Sprite
 
         @rotation = @game.physics.arcade.angleToPointer(@)
 
-        if @.game.input.activePointer.isDown
-            @shoot()
 
     # Attempts to shoot the gun.
     # Currently there are a few conditions on shooting:
@@ -57,6 +59,7 @@ class exports.Gun extends Phaser.Sprite
     # Bullets are drawn from @pool and recycled
     #
     shoot: ()=>
+        return if @game.time.now - @game.input.activePointer.timeDown < @click_time
         return if @game.time.now - @last_bullet_time < @fire_delay
         return if @loaded_bullets is 0
 
