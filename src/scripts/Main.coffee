@@ -7,14 +7,15 @@ window.onload = ()->
 
 gamestate =
     preload: ()->
-        #game.load.spritesheet('player', 'assets/img/dude.png', 32, 48);
-        game.load.image('phaser', 'assets/img/phaser.png');
-        game.load.image('player', 'assets/img/obj/player.png');
+        game.load.image 'player', 'assets/img/obj/player.png'
+        game.load.image 'player_bullet', 'assets/img/obj/bullet.png'
 
     create: ()->
-        game.physics.startSystem(Phaser.Physics.ARCADE);
-        #game.add.sprite(0, 0, 'phaser');
+        game.physics.startSystem Phaser.Physics.ARCADE
+
         window.player = new Player(game)
-        game.add.existing(player)
-        game.physics.enable(player, Phaser.Physics.ARCADE)
+        game.add.existing player
+        game.add.existing player.gun
+
+        game.physics.enable player, Phaser.Physics.ARCADE
 
