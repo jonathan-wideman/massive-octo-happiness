@@ -65,8 +65,8 @@ class exports.Gun extends Phaser.Sprite
 
         # @game.custom_fx.flash2.flash(5000, 255, 255, 255, 1)
         # @game.custom_fx.flash.flash(30000, 0, 0, 0, 0.25)
-        @game.custom_fx.flash2.flash(250, 255, 255, 255, 1)
-        @game.custom_fx.flash.flash(3000, 0, 0, 0, 0.25)
+        @game.custom_fx.flash2.flash(250, 255, 255, 255, 0.75)
+        # @game.custom_fx.flash.flash(3000, 0, 0, 0, 0.25)
 
         @last_bullet_time = @game.time.now
 

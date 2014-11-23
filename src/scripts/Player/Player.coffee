@@ -17,6 +17,7 @@ class exports.Player extends Phaser.Sprite
     # rounds loaded in the gun don't count.
     ammo: 6
 
+    immune: false
 
     constructor: (@game)->
         @secrets = []
@@ -110,4 +111,5 @@ class exports.Player extends Phaser.Sprite
         if @game.input.keyboard.justPressed(Phaser.Keyboard.E)
             item.pickUp(@)
 
-
+    clearImmunity: ()->
+        @immune = false

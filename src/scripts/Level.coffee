@@ -1,3 +1,5 @@
+Secret = require("./Items/Secrets/Secret").Secret
+ExitKey = require("./Items/ExitKey").ExitKey
 Room = require("./Room").Room
 
 # Each level is made up of many rooms. To progress past a
@@ -31,13 +33,40 @@ class exports.Level extends Phaser.Group
         # layout is the 'map' of how all the rooms are arranges; represented as a tilemap
         @layout = null
 
-        @build()
+        @build(window.gameDepth)
         # console.log @
 
-    build: () ->
+    build: (depth = 3) ->
         # @buildRooms 10
         # build a layout of the rooms, width by height
-        @buildLayout 10, 10
+        @buildLayout depth, depth
+        @placeItems depth
+
+    placeItems: (depth) ->
+        # bound the number of secrets placed
+        if depth > @rooms.length
+            depth = @rooms.length
+
+        # place some secrets
+        rooms = _.clone @rooms
+        for i in [0...depth] by 1
+            # pick a unique random room
+            room = @game.rnd.pick rooms
+            _.pull rooms, room
+            # add a secret to this room
+            secret = new Secret @game
+            secret.add room.itemGroup
+            # console.log 'placed secret in room ' + room.mapX + ',' + room.mapY
+        @numSecrets = depth
+        # console.log 'placed ' + depth + ' secrets'
+
+        # place the exit key
+        finishRoom = _.find @rooms, { type: 3 }
+        key = new ExitKey @game
+        key.add room.itemGroup
+        console.log 'placed key in room ' + room.mapX + ',' + room.mapY
+
+
 
     buildRooms: (count) ->
         @rooms = []
@@ -83,7 +112,7 @@ class exports.Level extends Phaser.Group
         # place a starting location
         startX = Math.floor(Math.random() * @layout.width)
         startY = Math.floor(Math.random() * @layout.height)
-        @layout.putTile 2, startX, startY ;
+        @layout.putTile 1, startX, startY ;
         placedRoom = new Room @game, @, startX, startY
         @rooms.push placedRoom
 
@@ -221,6 +250,7 @@ class exports.Level extends Phaser.Group
         @layout.putTile value, x, y;
         newRoom = new Room @game, @, x, y
         @rooms.push newRoom
+        newRoom.type = value
         return newRoom
 
     # switch rooms in a given direction

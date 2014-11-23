@@ -29,10 +29,44 @@ class exports.EnemyHorror extends Phaser.Sprite
 
         this
 
-    # update: ()=>
+    update: ()->
         # avoidMouse()
+        # @followPlayer()
 
     # avoidMouse: () ->
+
+    followPlayer: ()->
+        console.log "follow..."
+        # Calculate the angle from the missile to the mouse cursor game.input.x
+        # and game.input.y are the mouse position; substitute with whatever
+        # target coordinates you need.
+        targetAngle = @game.math.angleBetween @x, @y, @game.input.activePointer.x, @game.input.activePointer.y
+
+        # Gradually (@TURN_RATE) aim the missile towards the target angle
+        if @rotation != targetAngle
+            # Calculate difference between the current angle and targetAngle
+            delta = targetAngle - @rotation;
+
+            # Keep it in range from -180 to 180 to make the most efficient turns.
+            if delta > Math.PI
+                delta -= Math.PI * 2
+            if delta < -Math.PI
+                delta += Math.PI * 2
+
+            if delta > 0
+                # Turn clockwise
+                @angle += @TURN_RATE
+            else
+                # Turn counter-clockwise
+                @angle -= @TURN_RATE
+
+            # Just set angle to target angle if they are close
+            if (Math.abs(delta) < @game.math.degToRad(@TURN_RATE))
+                @rotation = targetAngle
+
+        # Calculate velocity vector based on @rotation and @speed
+        @body.velocity.x = Math.cos(@rotation) * @speed;
+        @body.velocity.y = Math.sin(@rotation) * @speed;
 
 
     attack: () ->

@@ -6,6 +6,9 @@ Room = require("./Room").Room
 ScreenFlash = require("./Misc/ScreenFlash").ScreenFlash
 
 window.onload = ()->
+    # haaax
+    window.gameDepth = 3
+
     window.game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game-container', gamestate)
 
 
@@ -17,6 +20,7 @@ gamestate =
         game.load.image 'pills', 'assets/img/obj/pills2.png'
         game.load.image 'ammo', 'assets/img/obj/ammo2.png'
         game.load.image 'secret', 'assets/img/obj/secret2.png'
+        game.load.image 'secret_exit', 'assets/img/obj/secretExit.png'
         game.load.image 'sanity_potion', 'assets/img/obj/sanity_potion2.png'
 
         game.load.image('map_tiles', 'assets/img/ui/mapTiles.png');
@@ -24,14 +28,15 @@ gamestate =
 
 
     update: ()->
-        if game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR, 10)
-            @level.nextRoom()
+        # if game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR, 10)
+        #     @level.nextRoom()
 
-        if game.input.keyboard.justPressed(Phaser.Keyboard.ENTER, 10)
+        if game.input.keyboard.justPressed(Phaser.Keyboard.Q, 10)
             @ui.toggleMap()
 
-        if game.input.keyboard.justPressed(Phaser.Keyboard.BACKSPACE, 10)
-            game.state.restart(true)
+        # if game.input.keyboard.justPressed(Phaser.Keyboard.BACKSPACE, 10)
+            # game.state.restart(true)
+            # game.nextLevel()
 
         if @player.y < game.world.bounds.y
             # console.log 'north'
@@ -50,6 +55,9 @@ gamestate =
             @level.travel 'east'
             @player.x = game.world.bounds.x
 
+        if !player.alive and !@triggeredGameOver
+            @triggeredGameOver = true
+            game.gameOver()
 
 
     create: ()->
@@ -68,12 +76,14 @@ gamestate =
 
         @level = new Level game
         window.level = @level
+        game.level = @level
         @level.showRoom(0)
 
         game.physics.startSystem Phaser.Physics.ARCADE
 
         @player = new Player(game)
         window.player = @player
+        game.player = @player
 
         # enemy = new EnemyHorror(game, 200, 200)
         # game.add.existing enemy
@@ -93,6 +103,21 @@ gamestate =
         game.custom_fx.flash = flash
         game.custom_fx.flash2 = flash2
 
+        game.nextLevel = () ->
+            window.gameDepth += 1
+            window.ui.showMessage('there are always more secrets...')
+            console.log 'next level: ' + window.gameDepth
+            game.time.events.add(Phaser.Timer.SECOND * 3, game.doRestart, this);
+
+        game.doRestart = () ->
+            game.state.restart(true)
+
+        game.gameOver = () ->
+            window.gameDepth = 3
+            window.ui.showMessage('you went mad; start over' + (window.gameDepth - 2))
+            console.log 'you died; restarting at level ' + window.gameDepth
+            # game.state.restart(true)
+            game.time.events.add(Phaser.Timer.SECOND * 3, game.doRestart, this);
 
 
         # console.log game.world.bounds

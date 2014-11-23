@@ -36,16 +36,20 @@ class exports.Room
         Pills = require("./Items/Pills").Pills
         SanityPotion = require("./Items/SanityPotion").SanityPotion
         Ammo = require("./Items/Ammo").Ammo
-        Secret = require("./Items/Secrets/Secret").Secret
+        # Secret = require("./Items/Secrets/Secret").Secret
 
-        pills = new Pills @game
-        pills.add @itemGroup
-        potion = new SanityPotion @game
-        potion.add @itemGroup
-        ammo = new Ammo @game
-        ammo.add @itemGroup
-        secret = new Secret @game
-        secret.add @itemGroup
+        # 1 in 5 chance
+        if !(game.rnd.between(1, 5) - 1)
+            pills = new Pills @game
+            pills.add @itemGroup
+        if !(game.rnd.between(1, 5) - 1)
+            potion = new SanityPotion @game
+            potion.add @itemGroup
+        if !(game.rnd.between(1, 5) - 1)
+            ammo = new Ammo @game
+            ammo.add @itemGroup
+        # secret = new Secret @game
+        # secret.add @itemGroup
 
         @enemyGroup = new EnemyGroup @game, null
         enemy = new EnemyHorror @game
