@@ -63,7 +63,10 @@ class exports.Gun extends Phaser.Sprite
         return if @game.time.now - @last_bullet_time < @fire_delay
         return if @loaded_bullets is 0
 
-        @game.custom_fx.flash.flash(300, 200, 200, 100, .5)
+        # @game.custom_fx.flash2.flash(5000, 255, 255, 255, 1)
+        # @game.custom_fx.flash.flash(30000, 0, 0, 0, 0.25)
+        @game.custom_fx.flash2.flash(250, 255, 255, 255, 1)
+        @game.custom_fx.flash.flash(3000, 0, 0, 0, 0.25)
 
         @last_bullet_time = @game.time.now
 

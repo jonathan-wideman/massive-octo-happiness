@@ -1,4 +1,5 @@
 Player = require("./Player/Player").Player
+EnemyHorror = require("./Enemy/EnemyHorror").EnemyHorror
 Ui = require("./Ui/Ui").Ui
 Level = require("./Level").Level
 Room = require("./Room").Room
@@ -74,6 +75,9 @@ gamestate =
         @player = new Player(game)
         window.player = @player
 
+        enemy = new EnemyHorror(game, 200, 200)
+        game.add.existing enemy
+
         game.physics.enable player, Phaser.Physics.ARCADE
 
         @ui = new Ui(game, player)
@@ -82,10 +86,13 @@ gamestate =
 
 
         flash = new ScreenFlash game
+        flash2 = new ScreenFlash game
         flash.add()
+        flash2.add()
 
         game.custom_fx.flash = flash
-        
+        game.custom_fx.flash2 = flash2
+
 
 
         # console.log game.world.bounds
