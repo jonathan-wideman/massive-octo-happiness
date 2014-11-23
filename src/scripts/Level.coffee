@@ -71,10 +71,11 @@ class exports.Level extends Phaser.Group
         desiredRooms = game.rnd.between minRooms, maxRooms
 
         @buildPath(desiredRooms)
+        @buildExtra(desiredRooms)
 
 
     # random-steps a path from start to finish
-    buildPath: (count) ->
+    buildPath: (maxRooms) ->
         # place a starting location
         startX = Math.floor(Math.random() * @layout.width)
         startY = Math.floor(Math.random() * @layout.height)
@@ -82,26 +83,86 @@ class exports.Level extends Phaser.Group
         placedRoom = new Room @game, @, startX, startY
         @rooms.push placedRoom
 
-        # finishX = Math.floor(Math.random() * @layout.width)
-        # while finishX == startX
-        #     finishX = Math.floor(Math.random() * @layout.width)
-        # finishY = Math.floor(Math.random() * @layout.height)
-        # while finishY == startY
-        #     finishY = Math.floor(Math.random() * @layout.height)
-        # @layout.putTile(3, finishX, finishY);
-        # @rooms.push(new Room @game, @, finishX, finishY)
-
         repeats = 0
-        while @rooms.length <= count and repeats < 10
+        while @rooms.length <= maxRooms and repeats < 10
+            repeats += 1
             if placedRoom
                 repeats = 0
                 lastRoom = placedRoom
-            repeats += 1
             placedRoom = @buildPathStep lastRoom.mapX, lastRoom.mapY
+
+        # if repeats >= 10
+        #     console.log "could not place room - too many iterations"
+
 
 
         # replace the last room with a finish room
         @layout.putTile 3, lastRoom.mapX, lastRoom.mapY
+
+    # builds divergent rooms
+    buildExtra: (maxRooms) ->
+        repeats = 0
+        while @rooms.length <= maxRooms and repeats < 10
+            repeats += 1
+            if placedRoom
+                repeats = 0
+            placedRoom = @buildThrow()
+
+        # if repeats >= 10
+        #     console.log "could not place room - too many iterations"
+
+
+    # builds a room by 'throwing' it in from a side
+    buildThrow: () ->
+        dir = @game.rnd.pick @dirs
+        if dir == @north
+            # start at bottom
+            x = @game.rnd.between(0, @layout.width)
+            y = @layout.height
+            # console.log 'throwing ' + dir.name + ' at ' + x + ',' + y
+        else if dir == @south
+            # start at top
+            x = @game.rnd.between(0, @layout.width)
+            y = 0
+            # console.log 'throwing ' + dir.name + ' at ' + x + ',' + y
+        else if dir == @west
+            # start at right
+            x = @layout.width
+            y = @game.rnd.between(0, @layout.height)
+            # console.log 'throwing ' + dir.name + ' at ' + x + ',' + y
+        else if dir == @east
+            # start at left
+            x = 0
+            y = @game.rnd.between(0, @layout.height)
+            # console.log 'throwing ' + dir.name + ' at ' + x + ',' + y
+
+        # if our start is no good, just fail out
+        if !@canPlaceRoom x, y
+            # console.log 'aborting throw - bad start'
+            return null
+
+        # step in direction until we can't place room
+        while @canPlaceRoom x, y
+            x += dir.dX
+            y += dir.dY
+            # console.log 'checking ' + x + ',' + y
+        # if we're off the map now, also fail out
+        if !@isOnMap x, y
+            # console.log 'aborting throw - did not hit anything'
+            return null
+
+        # now take one step backwards
+        x -= dir.dX
+        y -= dir.dY
+
+        # if if this is no good, we f'd something up, just fail out
+        if !@canPlaceRoom x, y
+            # console.log 'aborting throw - wtf happened?'
+            return null
+
+        # ok, place it
+        # console.log 'placed at ' + x + ',' + y
+        return @placeRoom x, y, 1
 
 
 
@@ -129,10 +190,18 @@ class exports.Level extends Phaser.Group
         return newRoom
 
 
-    canPlaceRoom: (x, y) ->
+    isOnMap: (x, y) ->
         # is the space on the map?
         if x < 0 or y < 0 or x >= @layout.width or y >= @layout.height
             return false
+
+        return true
+
+    canPlaceRoom: (x, y) ->
+        # is the space on the map?
+        if !@isOnMap x, y
+            return false
+
         # is the space itself occupied?
         if @layout.getTile x, y
             return false
@@ -144,8 +213,8 @@ class exports.Level extends Phaser.Group
         return true
 
     # place a room and return it
-    placeRoom: (x, y) ->
-        @layout.putTile 1, x, y;
+    placeRoom: (x, y, value = 1) ->
+        @layout.putTile value, x, y;
         newRoom = new Room @game, @, x, y
         @rooms.push newRoom
         return newRoom
@@ -171,8 +240,8 @@ class exports.Level extends Phaser.Group
         newRoom = _.find @rooms, { mapX: dX, mapY: dY }
 
         if newRoom
-            console.log 'room found; travelling ' + direction
-            console.log  newRoom
+            # console.log 'room found; travelling ' + direction
+            # console.log  newRoom
             @showRoom newRoom.getIndex()
             return
 
