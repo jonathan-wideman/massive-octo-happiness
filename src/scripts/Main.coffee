@@ -86,10 +86,13 @@ gamestate =
 
 
         flash = new ScreenFlash game
+        flash2 = new ScreenFlash game
         flash.add()
+        flash2.add()
 
         game.custom_fx.flash = flash
-        
+        game.custom_fx.flash2 = flash2
+
 
 
         # console.log game.world.bounds
