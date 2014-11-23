@@ -57,12 +57,16 @@ class exports.Level extends Phaser.Group
         @layoutLayer = @layout.create('level1', width, height, 32, 32);
         @layoutLayer.parent.remove @layoutLayer
 
-        # populate random squares on the layer
-        # for x in [0...width] by 1
-        #     for y in [0...height] by 1
-        #         if Math.random() > 0.6
-        #             @layout.putTile 1, x, y;
-        #             @rooms.push(new Room @game, @, x, y)
+        # generation:
+
+        # - start with 'tetris piece' path
+        #     - start to finish
+        #     - minimum distance < level size
+        #     - random stepped
+
+        # - 'throw' rooms in from the sides until room count reached
+        #     - pick a side
+        #     - step forward until hit room
 
         # width = level depth, so the number of rooms desired should be
         # a minimum of depth, and a maximum of the filled level
