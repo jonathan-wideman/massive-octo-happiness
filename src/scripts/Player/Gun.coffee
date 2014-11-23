@@ -8,7 +8,7 @@ class exports.Gun extends Phaser.Sprite
     last_bullet_time: 0
 
     # How fast bullets move
-    speed: 2100
+    speed: 3000
 
     # How long you have to wait (ms) between shooting
     fire_delay: 100

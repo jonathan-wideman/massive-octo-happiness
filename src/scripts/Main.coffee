@@ -13,10 +13,10 @@ gamestate =
         game.load.image 'player', 'assets/img/obj/player.png'
         game.load.image 'gun', 'assets/img/obj/gun.png'
         game.load.image 'player_bullet', 'assets/img/obj/bullet.png'
-        game.load.image 'pills', 'assets/img/obj/pills.png'
-        game.load.image 'ammo', 'assets/img/obj/ammo.png'
-        game.load.image 'secret', 'assets/img/obj/secret.png'
-        game.load.image 'sanity_potion', 'assets/img/obj/sanity_potion.png'
+        game.load.image 'pills', 'assets/img/obj/pills2.png'
+        game.load.image 'ammo', 'assets/img/obj/ammo2.png'
+        game.load.image 'secret', 'assets/img/obj/secret2.png'
+        game.load.image 'sanity_potion', 'assets/img/obj/sanity_potion2.png'
 
         game.load.image('map_tiles', 'assets/img/ui/mapTiles.png');
         game.load.image('youAreHere', 'assets/img/ui/youAreHere.png');
