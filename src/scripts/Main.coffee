@@ -1,4 +1,5 @@
 Player = require("./Player/Player").Player
+EnemyHorror = require("./Enemy/EnemyHorror").EnemyHorror
 Ui = require("./Ui/Ui").Ui
 Level = require("./Level").Level
 Room = require("./Room").Room
@@ -71,6 +72,9 @@ gamestate =
 
         @player = new Player(game)
         window.player = @player
+
+        enemy = new EnemyHorror(game, 200, 200)
+        game.add.existing enemy
 
         game.physics.enable player, Phaser.Physics.ARCADE
 
