@@ -28,8 +28,38 @@ gamestate =
         if game.input.keyboard.justPressed(Phaser.Keyboard.ENTER, 10)
             @ui.toggleMap()
 
+        if game.input.keyboard.justPressed(Phaser.Keyboard.BACKSPACE, 10)
+            game.state.restart(true)
+
+        if @player.y < game.world.bounds.y
+            # console.log 'north'
+            @level.travel 'north'
+            @player.y = game.world.bounds.height - @player.height
+        else if @player.y > game.world.bounds.y + game.world.bounds.height
+            # console.log 'south'
+            @level.travel 'south'
+            @player.y = game.world.bounds.y
+        else if @player.x < game.world.bounds.x
+            # console.log 'west'
+            @level.travel 'west'
+            @player.x = game.world.bounds.width - @player.width
+        else if @player.x > game.world.bounds.x + game.world.bounds.width
+            # console.log 'east'
+            @level.travel 'east'
+            @player.x = game.world.bounds.x
+
+
 
     create: ()->
+        # capture some keys
+        game.input.keyboard.addKeyCapture Phaser.Keyboard.SPACEBAR
+        game.input.keyboard.addKeyCapture Phaser.Keyboard.ENTER
+        game.input.keyboard.addKeyCapture Phaser.Keyboard.BACKSPACE
+        game.input.keyboard.addKeyCapture Phaser.Keyboard.UP
+        game.input.keyboard.addKeyCapture Phaser.Keyboard.DOWN
+        game.input.keyboard.addKeyCapture Phaser.Keyboard.LEFT
+        game.input.keyboard.addKeyCapture Phaser.Keyboard.RIGHT
+
         game.stage.backgroundColor = '#2d2d2d';
 
         @level = new Level game
@@ -38,7 +68,8 @@ gamestate =
 
         game.physics.startSystem Phaser.Physics.ARCADE
 
-        window.player = new Player(game)
+        @player = new Player(game)
+        window.player = @player
 
         game.physics.enable player, Phaser.Physics.ARCADE
 
@@ -46,3 +77,4 @@ gamestate =
         window.ui = @ui
         @ui.addMap @level.layoutLayer
 
+        # console.log game.world.bounds

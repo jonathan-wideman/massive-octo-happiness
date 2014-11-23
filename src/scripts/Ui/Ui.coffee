@@ -58,3 +58,4 @@ class exports.Ui
     toggleMap: () ->
         if @map
             @map.visible = !@map.visible
+            @youAreHere.visible = @map.visible

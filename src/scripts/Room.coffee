@@ -11,7 +11,7 @@ class exports.Room
         # console.log @
 
     add: () ->
-        console.log "ADDINGS"
+        # console.log "ADDINGS"
         @level.group.add @backImg
         @level.group.add @itemGroup
 
