@@ -63,6 +63,8 @@ class exports.Gun extends Phaser.Sprite
         return if @game.time.now - @last_bullet_time < @fire_delay
         return if @loaded_bullets is 0
 
+        @game.custom_fx.flash.flash(300, 200, 200, 100, .5)
+
         @last_bullet_time = @game.time.now
 
         bullet = @pool.getFirstDead()

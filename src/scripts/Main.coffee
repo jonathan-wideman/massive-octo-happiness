@@ -2,7 +2,7 @@ Player = require("./Player/Player").Player
 Ui = require("./Ui/Ui").Ui
 Level = require("./Level").Level
 Room = require("./Room").Room
-
+ScreenFlash = require("./Misc/ScreenFlash").ScreenFlash
 
 window.onload = ()->
     window.game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game-container', gamestate)
@@ -52,6 +52,8 @@ gamestate =
 
 
     create: ()->
+        game.custom_fx ?= {}
+
         # capture some keys
         game.input.keyboard.addKeyCapture Phaser.Keyboard.SPACEBAR
         game.input.keyboard.addKeyCapture Phaser.Keyboard.ENTER
@@ -77,5 +79,13 @@ gamestate =
         @ui = new Ui(game, player)
         window.ui = @ui
         @ui.addMap @level.layoutLayer
+
+
+        flash = new ScreenFlash game
+        flash.add()
+
+        game.custom_fx.flash = flash
+        
+
 
         # console.log game.world.bounds
