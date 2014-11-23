@@ -108,6 +108,7 @@ class exports.Gun extends Phaser.Sprite
             bullet.anchor.setTo 0.5, 0.5
             bullet.checkWorldBounds = true
             bullet.outOfBoundsKill = true
+            bullet.damageAmount = 1
 
             @pool.add(bullet)
 

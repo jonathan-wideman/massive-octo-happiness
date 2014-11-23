@@ -8,17 +8,24 @@ class exports.EnemyHorror extends Phaser.Sprite
     # attack cooldown in millisecs
     attackCooldown: 3000
 
+    # timer
+    # @attackTimer:
+
+    health: 5
+
 
     constructor: (@game, x = 0, y = 0)->
         @secrets = []
 
-        x = @game.world.centerX + 64
-        y = @game.world.centerY + 64
+        # x = @game.world.centerX + 64
+        # y = @game.world.centerY + 64
         super @game, x, y, 'player', 1
+
+        @health = 3
 
         @anchor.setTo 0.5, 0.5
 
-        game.time.events.loop @attackCooldown, @attack, this
+        # @game.time.events.loop @attackCooldown, @attack, this
 
         this
 
