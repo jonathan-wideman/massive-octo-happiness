@@ -8,7 +8,7 @@ class exports.Gun extends Phaser.Sprite
     last_bullet_time: 0
 
     # How fast bullets move
-    speed: 2100
+    speed: 3000
 
     # How long you have to wait (ms) between shooting
     fire_delay: 100
@@ -62,6 +62,8 @@ class exports.Gun extends Phaser.Sprite
         return if @game.time.now - @game.input.activePointer.timeDown < @click_time
         return if @game.time.now - @last_bullet_time < @fire_delay
         return if @loaded_bullets is 0
+
+        @game.custom_fx.flash.flash(300, 200, 200, 100, .5)
 
         @last_bullet_time = @game.time.now
 

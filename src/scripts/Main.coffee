@@ -3,7 +3,7 @@ EnemyHorror = require("./Enemy/EnemyHorror").EnemyHorror
 Ui = require("./Ui/Ui").Ui
 Level = require("./Level").Level
 Room = require("./Room").Room
-
+ScreenFlash = require("./Misc/ScreenFlash").ScreenFlash
 
 window.onload = ()->
     window.game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game-container', gamestate)
@@ -14,10 +14,10 @@ gamestate =
         game.load.image 'player', 'assets/img/obj/player.png'
         game.load.image 'gun', 'assets/img/obj/gun.png'
         game.load.image 'player_bullet', 'assets/img/obj/bullet.png'
-        game.load.image 'pills', 'assets/img/obj/pills.png'
-        game.load.image 'ammo', 'assets/img/obj/ammo.png'
-        game.load.image 'secret', 'assets/img/obj/secret.png'
-        game.load.image 'sanity_potion', 'assets/img/obj/sanity_potion.png'
+        game.load.image 'pills', 'assets/img/obj/pills2.png'
+        game.load.image 'ammo', 'assets/img/obj/ammo2.png'
+        game.load.image 'secret', 'assets/img/obj/secret2.png'
+        game.load.image 'sanity_potion', 'assets/img/obj/sanity_potion2.png'
 
         game.load.image('map_tiles', 'assets/img/ui/mapTiles.png');
         game.load.image('youAreHere', 'assets/img/ui/youAreHere.png');
@@ -53,6 +53,8 @@ gamestate =
 
 
     create: ()->
+        game.custom_fx ?= {}
+
         # capture some keys
         game.input.keyboard.addKeyCapture Phaser.Keyboard.SPACEBAR
         game.input.keyboard.addKeyCapture Phaser.Keyboard.ENTER
@@ -81,5 +83,13 @@ gamestate =
         @ui = new Ui(game, player)
         window.ui = @ui
         @ui.addMap @level.layoutLayer
+
+
+        flash = new ScreenFlash game
+        flash.add()
+
+        game.custom_fx.flash = flash
+        
+
 
         # console.log game.world.bounds
