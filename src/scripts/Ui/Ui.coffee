@@ -1,4 +1,6 @@
 
+# For list of available webfont names, look at build/index.html, 
+# Under the style block describing font-families. 
 class exports.Ui
     constructor: (@game, @player)->
 
@@ -7,13 +9,14 @@ class exports.Ui
 
         @youAreHere = @game.make.image 0, 0, 'youAreHere'
 
-        style = { font: "14px Arial", fill: "#ff0044", align: "center" }
+        style = { font: "29px blackboardregular", fill: "#ff0044", align: "center" }
         @sanity = @game.make.text(
             @game.world.centerX,
             @game.world.centerY,
             "Player Sanity: #{@player.sanity}"
             style
         )
+        @sanity.anchor.setTo(0.5, 0.5)
         @group.add @sanity
 
         @sanity.update = () =>
