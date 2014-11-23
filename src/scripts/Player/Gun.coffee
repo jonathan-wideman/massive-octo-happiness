@@ -8,7 +8,7 @@ class exports.Gun extends Phaser.Sprite
     last_bullet_time: 0
 
     # How fast bullets move
-    speed: 500
+    speed: 2100
 
     # How long you have to wait (ms) between shooting
     fire_delay: 100
@@ -29,7 +29,7 @@ class exports.Gun extends Phaser.Sprite
     click_time: 100
 
     constructor: (@game, @player)->
-        super @game, 0, 0, 'player_bullet', 1
+        super @game, 0, 0, 'gun', 1
         @anchor.setTo 0.5, 0.5
 
         @pool = @game.make.group()

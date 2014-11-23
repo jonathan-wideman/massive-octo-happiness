@@ -11,6 +11,7 @@ window.onload = ()->
 gamestate =
     preload: ()->
         game.load.image 'player', 'assets/img/obj/player.png'
+        game.load.image 'gun', 'assets/img/obj/gun.png'
         game.load.image 'player_bullet', 'assets/img/obj/bullet.png'
         game.load.image 'pills', 'assets/img/obj/pills.png'
         game.load.image 'ammo', 'assets/img/obj/ammo.png'
