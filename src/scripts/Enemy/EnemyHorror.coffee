@@ -1,6 +1,6 @@
 class exports.EnemyHorror extends Phaser.Sprite
     # How fast we can move
-    speed: 50
+    speed: 250
 
     # How much sanity we drain
     sanityDamage: 1
@@ -12,6 +12,8 @@ class exports.EnemyHorror extends Phaser.Sprite
     # @attackTimer:
 
     health: 5
+
+    TURN_RATE: 2
 
 
     constructor: (@game, x = 0, y = 0)->
@@ -29,19 +31,19 @@ class exports.EnemyHorror extends Phaser.Sprite
 
         this
 
-    update: ()->
+    update: ()=>
         # avoidMouse()
-        # @followPlayer()
+        @followPlayer()
 
     # avoidMouse: () ->
 
-    followPlayer: ()->
+    followPlayer: ()=>
         console.log "follow..."
         # Calculate the angle from the missile to the mouse cursor game.input.x
         # and game.input.y are the mouse position; substitute with whatever
         # target coordinates you need.
-        targetAngle = @game.math.angleBetween @x, @y, @game.input.activePointer.x, @game.input.activePointer.y
-
+        targetAngle = @game.math.angleBetween @x, @y, window.player.x, window.player.y
+        console.log targetAngle
         # Gradually (@TURN_RATE) aim the missile towards the target angle
         if @rotation != targetAngle
             # Calculate difference between the current angle and targetAngle

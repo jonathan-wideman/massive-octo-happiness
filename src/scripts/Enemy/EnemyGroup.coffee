@@ -11,6 +11,8 @@ class exports.EnemyGroup extends Phaser.Group
         @game.physics.arcade.overlap(window.player, @, @collidePlayer)
         @game.physics.arcade.overlap(window.player.gun.pool, @, @collideBullet)
 
+        super()
+
 
     collideBullet: (bullet, enemy)=>
         # console.log bullet
